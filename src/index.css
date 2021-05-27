@@ -1,13 +1,74 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.startButton {
+  margin: 20px 0;
+  width: 500px;
+  height: 60px;
+  background-color: grey;
+  color: white;
+  font-size: 20px;
+  border-top: 5px solid darkgray;
+  border-left: 5px solid rgb(109, 109, 109);
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+}
+.square {
+  width: 60px;
+  height: 60px;
+  background-color: grey;
+  color: white;
+  font-size: 30px;
+  border-top: 5px solid darkgray;
+  border-left: 5px solid rgb(109, 109, 109);
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+}
+.squareActive:active {
+  transform: scale(0.95);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.75);
+}
+.clickedSquare {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(134, 134, 134);
+  color: black;
+  font-size: 30px;
+  border-top: 1.5px solid darkgray;
+  border-left: 1.5px solid rgb(109, 109, 109);
+  border-right: 1.5px solid black;
+  border-bottom: 1.5px solid black;
+}
+.customGame {
+  margin: 10px 0;
+}
+.customGame input {
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
+}
+.customGame label {
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.radioButtons label {
+  color: black;
+  font-size: largest;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.radioButtons[value="beginner"] label {
+  color: red;
+}
+#flagButton {
+  border: 5px solid red;
+}
+
+body {
+  background-color: rgb(104, 173, 196);
+}
+.font {
+  font-family: "VT323", monospace;
+}
+h1,
+.board {
+  text-align: center;
 }
