@@ -1,4 +1,5 @@
-.startButton {
+.startButton,
+.endButton {
   margin: 20px 0;
   width: 500px;
   height: 60px;

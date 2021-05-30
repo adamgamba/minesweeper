@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM, { render } from "react-dom";
 import "./index.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class GameSetup extends React.Component {
   constructor(props) {
@@ -83,10 +82,7 @@ const StartButton = (props) => {
 };
 const EndButton = (props) => {
   return (
-    <button
-      className="startButton font"
-      onClick={() => props.onClick()}
-    >
+    <button className="endButton font" onClick={() => props.onClick()}>
       End Game
     </button>
   );
@@ -187,19 +183,19 @@ const CustomGameInfo = (props) => {
 };
 
 // ! not active
-const FlagButton = (props) => {
-  return (
-    <div>
-      <input
-        type="checkbox"
-        className="flagButton"
-        id="flagButton"
-        onChange={props.onChange}
-      />
-      <label htmlFor="flagButton">Place Flags?</label>
-    </div>
-  );
-};
+// const FlagButton = (props) => {
+//   return (
+//     <div>
+//       <input
+//         type="checkbox"
+//         className="flagButton"
+//         id="flagButton"
+//         onChange={props.onChange}
+//       />
+//       <label htmlFor="flagButton">Place Flags?</label>
+//     </div>
+//   );
+// };
 
 // Basic square tile in the game
 class Square extends React.Component {
@@ -221,12 +217,6 @@ class Square extends React.Component {
     if (this.props.isRevealed) className = "clickedSquare";
     if (!this.props.gameOver) className += " squareActive";
 
-    // const ICONS = (
-    //   <script
-    //     src="https://kit.fontawesome.com/e645a4d051.js"
-    //     crossorigin="anonymous"
-    //   ></script>
-    // );
     return (
       <button
         className={className}
@@ -241,7 +231,6 @@ class Square extends React.Component {
           value={this.props.value}
           isRevealed={this.props.isRevealed}
           isFlagged={this.props.isFlagged}
-          // icons={ICONS}
         />
       </button>
     );
@@ -255,11 +244,7 @@ const SquareText = (props) => {
     return <span>&nbsp;</span>;
   switch (props.value) {
     case "B":
-      return (
-        <span style={{ color: "black" }}>
-          <FontAwesomeIcon icon={["fas", "fa-bomb"]} />
-        </span>
-      );
+      return <span style={{ color: "black" }}>B</span>;
     case 1:
       return <span style={{ color: "blue" }}>1</span>;
     case 2:
@@ -295,6 +280,7 @@ class Board extends React.Component {
       squareValues: this.setUpBoard(this.props.numMines),
       currentClick: 0,
       gameOver: false,
+      gameWon: false,
     };
     this.setUpBoard = this.setUpBoard.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -415,7 +401,7 @@ class Board extends React.Component {
     }
     // Case where you click a bomb, call handleLoss() function
     else if (this.state.squareValues[i] === "B") {
-      this.handleLoss(); // TODO reveal bombs
+      this.handleLoss();
     }
     // Case where you need to reveal a clicked square
     else {
@@ -505,12 +491,12 @@ class Board extends React.Component {
   }
 
   handleLoss() {
-    // Sees how many bombs were correctly/incorrectly flagged
-    // todo Reveals all bomb locations
     let NUM_SQUARES = this.props.length * this.props.height;
     const isRevealed = this.state.isRevealed;
     let correctlyFlagged = 0,
       incorrectlyFlagged = 0;
+
+    // Sees how many bombs were correctly/incorrectly flagged
     for (let i = 0; i < NUM_SQUARES; i++) {
       if (
         this.state.squareValues[i] === "B" &&
@@ -524,6 +510,7 @@ class Board extends React.Component {
       ) {
         incorrectlyFlagged++;
       }
+      // Reveals all bomb locations
       if (
         this.state.squareValues[i] === "B" &&
         !this.state.isFlagged[i]
@@ -544,10 +531,6 @@ class Board extends React.Component {
       ${incorrectlyFlagged} mines.
       `
     );
-
-    // todo add end game button
-    // Ends the game (goes back to home screen)
-    // this.props.handleLoss();
   }
 
   render() {
@@ -574,15 +557,17 @@ class Board extends React.Component {
       board.push(<div>{row}</div>);
     }
     // If game is over, display an "End Game" button
-    if (this.state.gameOver)
+    if (this.state.gameOver) {
       board.push(<EndButton onClick={this.props.handleLoss} />);
+    }
+
     // Check for win
-    console.log(`num=${this.state.numRevealed}`);
     if (
       this.state.numRevealed + this.props.numMines ===
       this.props.length * this.props.height
     ) {
       alert(`Congrats, you won the game!`);
+      board.push(<EndButton onClick={this.props.handleLoss} />);
     }
     return <div className="board">{board}</div>;
   }
@@ -619,10 +604,7 @@ class Minesweeper extends React.Component {
   render() {
     return (
       <div className="font">
-        <h1>
-          Welcome to Minesweeper!{" "}
-          <FontAwesomeIcon icon={["fas", "fa-bomb"]} />
-        </h1>
+        <h1>Welcome to Minesweeper! </h1>
         {this.state.isActive ? (
           <Board
             length={this.state.length}
